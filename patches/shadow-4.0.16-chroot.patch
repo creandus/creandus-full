@@ -1,3 +1,104 @@
+diff -ur shadow-4.0.16-orig/src/groupadd.c shadow-4.0.16/src/groupadd.c
+--- shadow-4.0.16-orig/src/groupadd.c	2006-01-18 14:55:15.000000000 -0500
++++ shadow-4.0.16/src/groupadd.c	2006-07-03 18:38:29.000000000 -0400
+@@ -103,7 +103,8 @@
+ 			   "  -h, --help			display this help message and exit\n"
+ 			   "  -K, --key KEY=VALUE		overrides /etc/login.defs defaults\n"
+ 			   "  -o, --non-unique		allow create group with duplicate\n"
+-			   "				(non-unique) GID\n"));
++			   "				(non-unique) GID\n"
++			   "  -R, --root ROOT		Look for files under ROOT/etc instead of /etc\n"));
+ 	exit (E_USAGE);
+ }
+ 
+@@ -398,7 +399,7 @@
+ 		/*
+ 		 * Parse the command line options.
+ 		 */
+-		char *cp;
++		char *cp, *filename;
+ 		int option_index = 0;
+ 		int c;
+ 		static struct option long_options[] = {
+@@ -407,11 +408,12 @@
+ 			{"help", no_argument, NULL, 'h'},
+ 			{"key", required_argument, NULL, 'K'},
+ 			{"non-unique", required_argument, NULL, 'o'},
++			{"root", required_argument, NULL, 'R'},
+ 			{NULL, 0, NULL, '\0'}
+ 		};
+ 
+ 		while ((c =
+-			getopt_long (argc, argv, "fg:hK:o", long_options,
++			getopt_long (argc, argv, "fg:hK:oR:", long_options,
+ 				     &option_index)) != -1) {
+ 			switch (c) {
+ 			case 'f':
+@@ -462,6 +464,19 @@
+ 			case 'o':
+ 				oflg++;
+ 				break;
++			case 'R':	/* set new root */
++				filename = malloc (sizeof(char) * 1024);
++				snprintf (filename, 1024, "%s%s", optarg, PASSWD_FILE);
++				pw_name (filename);
++				snprintf (filename, 1024, "%s%s", optarg, GROUP_FILE);
++				gr_name (filename);
++				snprintf (filename, 1024, "%s%s", optarg, SHADOW_FILE);
++				spw_name (filename);
++				#ifdef SHADOWGRP
++				snprintf (filename, 1024, "%s%s", optarg, SGROUP_FILE);
++				sgr_name (filename);
++				#endif
++				free (filename);
+ 			default:
+ 				usage ();
+ 			}
+diff -ur shadow-4.0.16-orig/src/groupmod.c shadow-4.0.16/src/groupmod.c
+--- shadow-4.0.16-orig/src/groupmod.c	2005-10-19 11:21:07.000000000 -0400
++++ shadow-4.0.16/src/groupmod.c	2006-07-03 18:52:04.000000000 -0400
+@@ -96,7 +96,7 @@
+ 
+ static void usage (void)
+ {
+-	fprintf (stderr, _("Usage: groupmod [-g gid [-o]] [-n name] group\n"));
++	fprintf (stderr, _("Usage: groupmod [-g gid [-o]] [-n name] [-R root] group\n"));
+ 	exit (E_USAGE);
+ }
+ 
+@@ -318,10 +318,10 @@
+  */
+ static void process_flags (int argc, char **argv)
+ {
+-	char *end;
++	char *end, *filename;
+ 	int arg;
+ 
+-	while ((arg = getopt (argc, argv, "g:n:o")) != EOF) {
++	while ((arg = getopt (argc, argv, "g:n:oR:")) != EOF) {
+ 		switch (arg) {
+ 		case 'g':
+ 			gflg++;
+@@ -345,6 +345,19 @@
+ 		case 'o':
+ 			oflg++;
+ 			break;
++		case 'R':	/* set new root */
++			filename = malloc (sizeof(char) * 1024);
++			snprintf (filename, 1024, "%s%s", optarg, PASSWD_FILE);
++			pw_name (filename);
++			snprintf (filename, 1024, "%s%s", optarg, GROUP_FILE);
++			gr_name (filename);
++			snprintf (filename, 1024, "%s%s", optarg, SHADOW_FILE);
++			spw_name (filename);
++			#ifdef SHADOWGRP
++			snprintf (filename, 1024, "%s%s", optarg, SGROUP_FILE);
++			sgr_name (filename);
++			#endif
++			free (filename);
+ 		default:
+ 			usage ();
+ 		}
 diff -ur shadow-4.0.16-orig/src/useradd.c shadow-4.0.16/src/useradd.c
 --- shadow-4.0.16-orig/src/useradd.c	2006-05-30 14:28:45.000000000 -0400
 +++ shadow-4.0.16/src/useradd.c	2006-07-03 17:36:43.000000000 -0400
@@ -53,6 +154,53 @@ diff -ur shadow-4.0.16-orig/src/useradd.c shadow-4.0.16/src/useradd.c
  			case 's':
  				if (!VALID (optarg)
  				    || (optarg[0]
+diff -ur shadow-4.0.16-orig/src/userdel.c shadow-4.0.16/src/userdel.c
+--- shadow-4.0.16-orig/src/userdel.c	2006-05-12 20:45:00.000000000 -0400
++++ shadow-4.0.16/src/userdel.c	2006-07-03 18:32:05.000000000 -0400
+@@ -104,7 +104,8 @@
+ 			   "Options:\n"
+ 			   "  -f, --force			force removal of files, even if not owned by user\n"
+ 			   "  -h, --help			display this help message and exit\n"
+-			   "  -r, --remove			remove home directory and mail spool\n"));
++			   "  -r, --remove			remove home directory and mail spool\n"
++			   "  -R, --root ROOT		Look for files under ROOT/etc instead of /etc\n"));
+ 	exit (E_USAGE);
+ }
+ 
+@@ -626,10 +627,12 @@
+ 			{"force", no_argument, NULL, 'f'},
+ 			{"help", no_argument, NULL, 'h'},
+ 			{"remove", no_argument, NULL, 'r'},
++			{"root", required_argument, NULL, 'R'},
+ 			{NULL, 0, NULL, '\0'}
+ 		};
++		char *filename;
+ 		while ((c =
+-			getopt_long (argc, argv, "fhr",
++			getopt_long (argc, argv, "fhrR:",
+ 				     long_options, NULL)) != -1) {
+ 			switch (c) {
+ 			case 'f':	/* force remove even if not owned by user */
+@@ -638,6 +641,19 @@
+ 			case 'r':	/* remove home dir and mailbox */
+ 				rflg++;
+ 				break;
++			case 'R':	/* set new root */
++				filename = malloc (sizeof(char) * 1024);
++				snprintf (filename, 1024, "%s%s", optarg, PASSWD_FILE);
++				pw_name (filename);
++				snprintf (filename, 1024, "%s%s", optarg, GROUP_FILE);
++				gr_name (filename);
++				snprintf (filename, 1024, "%s%s", optarg, SHADOW_FILE);
++				spw_name (filename);
++				#ifdef SHADOWGRP
++				snprintf (filename, 1024, "%s%s", optarg, SGROUP_FILE);
++				sgr_name (filename);
++				#endif
++				free (filename);
+ 			default:
+ 				usage ();
+ 			}
 diff -ur shadow-4.0.16-orig/src/usermod.c shadow-4.0.16/src/usermod.c
 --- shadow-4.0.16-orig/src/usermod.c	2006-05-07 13:44:39.000000000 -0400
 +++ shadow-4.0.16/src/usermod.c	2006-07-03 17:36:39.000000000 -0400
