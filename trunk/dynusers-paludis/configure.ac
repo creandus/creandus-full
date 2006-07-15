@@ -36,6 +36,6 @@ dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
 	ebuild_setup_pre/Makefile
-	ebuild_setup_pre/00_dynusers.bash.in
+	ebuild_setup_pre/00_dynusers.bash
 	)
 dnl }}}
