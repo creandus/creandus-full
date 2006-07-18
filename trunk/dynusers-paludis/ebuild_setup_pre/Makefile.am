@@ -1,9 +1,9 @@
-MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~ 00_dynusers.bash
+MAINTAINERCLEANFILES = Makefile.in dynusers.bash
+CLEANFILES = *~
 SUBDIRS = .
 
 presetuphookdir = $(datadir)/paludis/hooks/ebuild_setup_pre/
 
-presetuphook_SCRIPTS = 00_dynusers.bash
+presetuphook_SCRIPTS = dynusers.bash
 
-EXTRA_DIST = 00_dynusers.bash.in
+EXTRA_DIST = dynusers.bash.in

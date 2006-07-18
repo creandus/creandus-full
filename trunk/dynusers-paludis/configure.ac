@@ -2,7 +2,7 @@ dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}}
 
 dnl {{{ program, version
 AC_PREREQ(2.59)
-AC_INIT([ebuild_setup_pre/00_dynusers.bash.in])
+AC_INIT([ebuild_setup_pre/dynusers.bash.in])
 AC_CONFIG_AUX_DIR(config)
 
 VERSION_MAJOR=0
@@ -36,6 +36,8 @@ dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
 	ebuild_setup_pre/Makefile
-	ebuild_setup_pre/00_dynusers.bash
+	ebuild_setup_pre/dynusers.bash
+	ebuild_postrm_post/Makefile
+	ebuild_postrm_post/dynusers.bash
 	)
 dnl }}}
