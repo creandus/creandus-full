@@ -1,5 +1,6 @@
 #!/bin/sh
 # Paludis hook for dynusers' addgroup.sh and adduser.sh scripts
+# Called after a package has been removed, to update the 
 
 prefix=@prefix@
 datarootdir=@datarootdir@
@@ -7,10 +8,8 @@ package=@PACKAGE@
 package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
-for i in ${ENEWGROUPS} ; do
-	"${scriptdir}/addgroup.sh" "${i}" "${PF}" "${USERLAND}"
-done
+# Read the common config stuff
+. "${scriptdir}/common/config.sh"
 
-for i in ${ENEWUSERS} ; do
-	"${scriptdir}/adduser.sh" "${i}" "${PF}" "${USERLAND}"
-done
+sed -i /${PF}/d "${DBDIR}"/users/*
+sed -i /${PF}/d "${DBDIR}"/groups/*
