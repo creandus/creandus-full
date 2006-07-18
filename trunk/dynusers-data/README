@@ -1,13 +1,12 @@
-These scripts aim to provide a unified, simple way for package managers 
-to add users and groups to the system when demanded by a package, and 
-then to maintain them later on.
+These data files are meant for use with the dynusers package, available 
+in the same place you found this package.
 
-Right now they're not at all ready for use, but any feedback, test 
-cases, etc would be very much appreciated.
+Currently there are few data files in this distribution, but any 
+contributions would be welcome. Email to <pioto@pioto.org>.
 
 An ebuild for this package can be found in my overlay.
- ViewVC: http://svn.pioto.org/viewvc/portage-pioto/sys-apps/dynusers-paludis
- AnonSVN: svn co svn://svn.pioto.org/pioto-portage/sys-apps/dynusers-paludis
+ ViewVC: http://svn.pioto.org/viewvc/portage-pioto/sys-apps/dynusers-data
+ AnonSVN: svn co svn://svn.pioto.org/pioto-portage/sys-apps/dynusers-data
 
 A tarball of the latest release may be found in:
  http://www.pioto.org/~pioto/gentoo/distfiles/
