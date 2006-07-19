@@ -1,0 +1,15 @@
+#!/bin/sh
+# Paludis hook for dynusers' addgroup.sh and adduser.sh scripts
+# Called after a package has been removed, to update the 
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+package=@PACKAGE@
+package=${package/-portage}
+scriptdir=@datadir@/${package}
+
+# Read the common config stuff
+. "${scriptdir}/common/config.sh"
+
+sed -i /${PF}/d "${DBDIR}"/users/*
+sed -i /${PF}/d "${DBDIR}"/groups/*

@@ -1,0 +1,16 @@
+#!/bin/sh
+# Paludis hook for dynusers' addgroup.sh and adduser.sh scripts
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+package=@PACKAGE@
+package=${package/-portage}
+scriptdir=@datadir@/${package}
+
+for i in ${ENEWGROUPS} ; do
+	"${scriptdir}/addgroup.sh" "${i}" "${PF}" "${USERLAND}"
+done
+
+for i in ${ENEWUSERS} ; do
+	"${scriptdir}/adduser.sh" "${i}" "${PF}" "${USERLAND}"
+done
