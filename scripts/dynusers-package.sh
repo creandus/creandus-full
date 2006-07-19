@@ -2,6 +2,7 @@
 REPODIR=${HOME}/svn/glep0027/trunk
 MODULES=
 WORKDIR=.
+DISTDIR=${HOME}/openhostingHome/www/gentoo/distfiles
 
 cd ${WORKDIR}
 
@@ -64,3 +65,10 @@ for i in ${MODULES} ; do
 done
 
 echo "All tests succeeded! :)"
+
+echo ">>> Copying all distfiles to ${DISTDIR}..."
+for i in ${MODULES} ; do
+	cd ${i}
+	cp -v ${i}-*.{tar.gz,tar.bz2,zip,rpm,dpkg} ${DISTDIR}
+	cd -
+done
