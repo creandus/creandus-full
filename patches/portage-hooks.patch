@@ -1,0 +1,43 @@
+Index: bin/ebuild.sh
+===================================================================
+--- bin/ebuild.sh	(revision 3953)
++++ bin/ebuild.sh	(working copy)
+@@ -5,7 +5,8 @@
+ 
+ PORTAGE_BIN_PATH="${PORTAGE_BIN_PATH:-/usr/lib/portage/bin}"
+ PORTAGE_PYM_PATH="${PORTAGE_PYM_PATH:-/usr/lib/portage/pym}"
+-declare -rx PORTAGE_BIN_PATH PORTAGE_PYM_PATH
++PORTAGE_HOOK_PATH="${PORTAGE_HOOK_PATH:-/usr/libexec/portage/hooks}"
++declare -rx PORTAGE_BIN_PATH PORTAGE_PYM_PATH PORTAGE_HOOK_PATH
+ 
+ export SANDBOX_PREDICT="${SANDBOX_PREDICT}:/proc/self/maps:/dev/console:${PORTAGE_PYM_PATH}:/dev/random"
+ export SANDBOX_WRITE="${SANDBOX_WRITE}:/dev/shm:/dev/stdout:/dev/stderr:${PORTAGE_TMPDIR}"
+@@ -1514,6 +1515,14 @@
+ set +f
+ 
+ for myarg in $*; do
++
++
++	if [[ -d ${PORTAGE_HOOK_PATH/pre_${myarg} ]] ; then
++		for i in ${PORTAGE_HOOK_PATH}/pre_${myarg}/* ; do
++			. ${i}
++		done
++	fi
++
+ 	case $myarg in
+ 	nofetch)
+ 		pkg_nofetch
+@@ -1615,6 +1624,13 @@
+ 		;;
+ 	esac
+ 
++	if [[ -d ${PORTAGE_HOOK_PATH/post_${myarg} ]] ; then
++		for i in ${PORTAGE_HOOK_PATH}/post_${myarg}/* ; 
++		do
++			. ${i}
++		done
++	fi
++
+ 	#if [ $? -ne 0 ]; then
+ 	#	exit 1
+ 	#fi
