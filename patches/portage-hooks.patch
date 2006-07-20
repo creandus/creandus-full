@@ -12,14 +12,15 @@ Index: bin/ebuild.sh
  
  export SANDBOX_PREDICT="${SANDBOX_PREDICT}:/proc/self/maps:/dev/console:${PORTAGE_PYM_PATH}:/dev/random"
  export SANDBOX_WRITE="${SANDBOX_WRITE}:/dev/shm:/dev/stdout:/dev/stderr:${PORTAGE_TMPDIR}"
-@@ -1514,6 +1515,14 @@
+@@ -1514,6 +1515,15 @@
  set +f
  
  for myarg in $*; do
 +
 +
-+	if [[ -d ${PORTAGE_HOOK_PATH/pre_${myarg} ]] ; then
++	if [[ -d ${PORTAGE_HOOK_PATH}/pre_${myarg} ]] ; then
 +		for i in ${PORTAGE_HOOK_PATH}/pre_${myarg}/* ; do
++			echo "Running hook: ${i}"
 +			. ${i}
 +		done
 +	fi
@@ -27,13 +28,13 @@ Index: bin/ebuild.sh
  	case $myarg in
  	nofetch)
  		pkg_nofetch
-@@ -1615,6 +1624,13 @@
+@@ -1615,6 +1625,13 @@
  		;;
  	esac
  
-+	if [[ -d ${PORTAGE_HOOK_PATH/post_${myarg} ]] ; then
-+		for i in ${PORTAGE_HOOK_PATH}/post_${myarg}/* ; 
-+		do
++	if [[ -d ${PORTAGE_HOOK_PATH}/post_${myarg} ]] ; then
++		for i in ${PORTAGE_HOOK_PATH}/post_${myarg}/* ; do
++			echo "Running hook: ${i}"
 +			. ${i}
 +		done
 +	fi
