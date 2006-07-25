@@ -4,7 +4,7 @@
 prefix=@prefix@
 datarootdir=@datarootdir@
 package=@PACKAGE@
-package=${package/-portage}
+package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
 for i in ${ENEWGROUPS} ; do

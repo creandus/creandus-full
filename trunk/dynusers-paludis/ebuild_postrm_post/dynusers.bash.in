@@ -6,12 +6,11 @@
 prefix=@prefix@
 datarootdir=@datarootdir@
 package=@PACKAGE@
-package=${package/-portage}
+package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
 # Read the common config stuff
 . "${scriptdir}/common/config.sh"
 
 # Remove only the first instance of CATEGORY/PF from the db files
-sed -i /^${CATEGORY}\\/${PF}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\} \
-	"${DBDIR}"/{users,groups}/*
+${scriptdir}/db.sh del "${CATEGORY}/${PF}"
