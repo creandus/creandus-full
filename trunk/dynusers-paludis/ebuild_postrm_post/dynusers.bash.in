@@ -13,4 +13,4 @@ scriptdir=@datadir@/${package}
 . "${scriptdir}/common/config.sh"
 
 # Remove only the first instance of CATEGORY/PF from the db files
-${scriptdir}/db.sh del "${CATEGORY}/${PF}"
+"${scriptdir}"/db.sh del "${CATEGORY}/${PF}"
