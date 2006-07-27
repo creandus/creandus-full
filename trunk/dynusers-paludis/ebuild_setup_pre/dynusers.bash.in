@@ -7,12 +7,5 @@ package=@PACKAGE@
 package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
-for i in ${ENEWGROUPS} ; do
-	"${scriptdir}/addgroup.sh" "${i}" "${CATEGORY}/${PF}" \
-		"${USERLAND}-${ELIBC}"
-done
-
-for i in ${ENEWUSERS} ; do
-	"${scriptdir}/adduser.sh" "${i}" "${CATEGORY}/${PF}" \
-		"${USERLAND}-${ELIBC}"
-done
+"${scriptdir}/add.sh" "${ENEWUSERS}" "${ENEWGROUPS}" "${CATEGORY}/${PF}" \
+	"${USERLAND}-${ELIBC}"
