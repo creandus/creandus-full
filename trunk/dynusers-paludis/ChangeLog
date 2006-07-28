@@ -1,3 +1,8 @@
+2006-07-27  Mike Kelly  <pioto@pioto.org>
+
+	* ebuild_postrm_post/dynusers.bash.in: Remove the now unnecessary
+	sourcing of ${scriptdir}/common/config.
+
 2006-07-26  Mike Kelly  <pioto@pioto.org>
 
 	* ebuild_setup_pre/dynusers.bash.in: Use the add.sh from dynusers to

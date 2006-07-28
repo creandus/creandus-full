@@ -9,8 +9,5 @@ package=@PACKAGE@
 package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
-# Read the common config stuff
-. "${scriptdir}/common/config.sh"
-
 # Remove only the first instance of CATEGORY/PF from the db files
 "${scriptdir}"/db.sh del "${CATEGORY}/${PF}"

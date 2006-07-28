@@ -1,3 +1,8 @@
+2006-07-27  Mike Kelly  <pioto@pioto.org>
+
+	* post_postrm/dynusers.bash.in: Remove unnecessary sourcing of
+	${scriptdir}/common/config.sh.
+
 2006-07-26  Mike Kelly  <pioto@pioto.org>
 
 	* pre_setup/dynusers.bash.in: Use the add.sh from dynusers to do all
@@ -6,8 +11,7 @@
 2006-07-24  Mike Kelly  <pioto@pioto.org>
 
 	* post_postrm/dynusers.bash.in: Make use of ${scriptdir}/db.sh to
-	interface with the backend db	instead of doing it directly
-	ourselves.
+	interface with the backend db instead of doing it directly ourselves.
 
 	* post_postrm/dynusers.bash.in: Drop the s from the user and group
 	DBDIR subdirs.
