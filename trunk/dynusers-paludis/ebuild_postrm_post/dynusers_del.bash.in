@@ -1,0 +1,13 @@
+#!/bin/sh
+# Paludis hook for dynusers' addgroup.sh and adduser.sh scripts
+# Called after a package has been removed, to update the 
+# user/group database
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+package=@PACKAGE@
+package=${package/-paludis}
+scriptdir=@datadir@/${package}
+
+# Remove only the first instance of CATEGORY/PF from the db files
+"${scriptdir}"/db.sh del "${CATEGORY}/${PF}"

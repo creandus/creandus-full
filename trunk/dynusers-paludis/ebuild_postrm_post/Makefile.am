@@ -1,9 +1,9 @@
-MAINTAINERCLEANFILES = Makefile.in dynusers.bash
+MAINTAINERCLEANFILES = Makefile.in dynusers_del.bash
 CLEANFILES = *~
 SUBDIRS = .
 
 postrmhookdir = $(datadir)/paludis/hooks/ebuild_postrm_post/
 
-postrmhook_SCRIPTS = dynusers.bash
+postrmhook_SCRIPTS = dynusers_del.bash
 
-EXTRA_DIST = dynusers.bash.in
+EXTRA_DIST = dynusers_del.bash.in

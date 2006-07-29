@@ -1,6 +1,8 @@
-2006-07-28  Mike Kelly  <pioto@pioto.org>
+2006-07-29  Mike Kelly  <pioto@pioto.org>
 
 	+ Release: 0.2.0
+
+	* ebuild_fail/: Add failure hook so we can clean up from ourselves.
 
 2006-07-27  Mike Kelly  <pioto@pioto.org>
 
