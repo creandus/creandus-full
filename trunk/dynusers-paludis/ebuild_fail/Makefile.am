@@ -9,7 +9,6 @@ failurehook_SCRIPTS = dynusers_failure.bash
 EXTRA_DIST = dynusers_failure.bash.in
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/common/
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_compile_fail/
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_test_fail/

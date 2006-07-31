@@ -1,5 +1,12 @@
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
+	+ Release: 0.3.1
+
+	* ebuild_fail/Makefile.am: Fix a problem which was preventing a
+	parallel make install with -j5 fail, while -j3, -j1 worked fine.
+
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
 	+ Release: 0.3.0
 
 2006-07-31  Mike Kelly  <pioto@pioto.org>
