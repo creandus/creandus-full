@@ -1,0 +1,30 @@
+MAINTAINERCLEANFILES = Makefile.in dynusers_failure.bash
+CLEANFILES = *~
+SUBDIRS = .
+
+failurehookdir = $(datadir)/paludis/hooks/common/
+
+failurehook_SCRIPTS = dynusers_failure.bash
+
+EXTRA_DIST = dynusers_failure.bash.in
+
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/common/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_compile_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_test_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_install_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_strip_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_preinst_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_merge_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_postinst_fail/
+	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_tidyup_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_compile_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_test_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_install_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_strip_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_preinst_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_merge_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_postinst_fail/
+	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_tidyup_fail/
