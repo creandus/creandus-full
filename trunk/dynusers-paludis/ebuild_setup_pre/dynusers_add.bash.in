@@ -1,5 +1,5 @@
 #!/bin/sh
-# Paludis hook for dynusers' addgroup.sh and adduser.sh scripts
+# Paludis hook for dynusers' addgroup.bash and adduser.bash scripts
 
 prefix=@prefix@
 datarootdir=@datarootdir@
@@ -7,5 +7,5 @@ package=@PACKAGE@
 package=${package/-paludis}
 scriptdir=@datadir@/${package}
 
-"${scriptdir}/add.sh" "${ENEWUSERS}" "${ENEWGROUPS}" "${CATEGORY}/${PF}" \
+"${scriptdir}/add.bash" "${ENEWUSERS}" "${ENEWGROUPS}" "${CATEGORY}/${PF}" \
 	"${USERLAND}-${ELIBC}"
