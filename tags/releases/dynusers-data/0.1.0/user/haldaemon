@@ -1,0 +1,6 @@
+# User for HAL, the Hardware Abstraction Layer daemon
+#uid: not yet specified... this needs to be determined
+#shell: not specified
+#home: not specified
+groups: haldaemon,disk,cdrom,cdrw,floppy,usb
+comment: user for running hald added by sys-apps/hal

@@ -1,0 +1,6 @@
+# A sample user config file, for user "foo"
+#uid: 1234
+shell: /bin/false
+home: /var/empty
+groups: foo
+comment: foo's user

@@ -1,0 +1,6 @@
+# User description file for apache user, added by net-www/apache
+uid: 81
+# shell not specified
+home: /var/www
+groups: apache
+comment: user added by net-www/apache

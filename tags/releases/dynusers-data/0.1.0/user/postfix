@@ -1,0 +1,6 @@
+# User added for mail-mta/postfix
+uid: 207
+#shell: not defined
+home: /var/spool/postfix
+groups: postfix
+comment: user added for mail-mta/postfix by portage

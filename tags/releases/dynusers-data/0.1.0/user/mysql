@@ -1,0 +1,5 @@
+uid: 60
+#shell: not defined
+#home: not defined
+groups: mysql
+comment: user added for dev-db/mysql
