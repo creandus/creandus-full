@@ -1,5 +1,9 @@
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
+	+ Release: 0.3.0
+
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
 	* ebuild_*/*bash*: Switch all called scripts from dynusers to end in
 	.bash instead of just .sh. Prepare for 0.3.0 release.
 
