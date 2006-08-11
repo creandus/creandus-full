@@ -1,5 +1,10 @@
 2006-08-11  Mike Kelly  <pioto@pioto.org>
 
+	* (everything): Drop all the ebuild_* directories, and keep our
+	scripts all in the top level.
+
+2006-08-11  Mike Kelly  <pioto@pioto.org>
+
 	* ebuild_fail/dynusers_failure.bash.in,
 	ebuild_postrm_post/dynusers_del.bash.in,
 	ebuild_setup_pre/dynusers_add.bash.in: Update the hooks to run all

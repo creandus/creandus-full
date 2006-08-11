@@ -3,7 +3,7 @@ dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}}
 dnl {{{ program, version
 AC_INIT([dynusers-paludis], [0.4.0], [pioto@pioto.org])
 AC_PREREQ([2.59])
-AC_CONFIG_SRCDIR([ebuild_setup_pre/dynusers_add.bash.in])
+AC_CONFIG_SRCDIR([dynusers_add.bash.in])
 AC_CONFIG_AUX_DIR([config])
 AM_INIT_AUTOMAKE([1.9])
 dnl }}}
@@ -29,8 +29,5 @@ dnl }}}
 dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
-	ebuild_setup_pre/Makefile
-	ebuild_postrm_post/Makefile
-	ebuild_fail/Makefile
 	)
 dnl }}}
