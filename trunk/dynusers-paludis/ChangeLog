@@ -1,9 +1,25 @@
+2006-08-11  Mike Kelly  <pioto@pioto.org>
+
+	* ebuild_fail/dynusers_failure.bash.in,
+	ebuild_postrm_post/dynusers_del.bash.in,
+	ebuild_setup_pre/dynusers_add.bash.in: Update the hooks to run all
+	stuff from within a helper function (to prevent polluting the
+	environment). Add copyright header and other boilerplate. Update hooks
+	to use the latest API specs.
+
+	* Makefile.am, ebuild_fail/Makefile.am,
+	ebuild_postrm_post/Makefile.am,  ebuild_setup_pre/Makefile.am,
+	tools/subst.bash, tools/get_autoconf_macros.sed: Clean up our
+	Makefile.am's. Add the shell script "compiler" from dynusers.
+
+	* configure.ac: "Modernize" our autoconf stuff.
+
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
 	+ Release: 0.3.1
 
-	* ebuild_fail/Makefile.am: Fix a problem which was preventing a
-	parallel make install with -j5 fail, while -j3, -j1 worked fine.
+	* ebuild_fail/Makefile.am: Fix a problem which was making a parallel
+	make install with -j5 fail, while -j3, -j1 worked fine.
 
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 

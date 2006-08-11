@@ -1,11 +1,17 @@
 #!/bin/sh
-# Paludis hook for dynusers' addgroup.bash and adduser.bash scripts
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Paludis hook for dynusers. Called before installing to add all necessary
+# users and groups.
+#
+# $Id: $
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-package=@PACKAGE@
-package=${package/-paludis}
-scriptdir=@datadir@/${package}
+do_hook() {
+	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
 
-"${scriptdir}/add.bash" "${ENEWUSERS}" "${ENEWGROUPS}" "${CATEGORY}/${PF}" \
-	"${USERLAND}-${ELIBC}"
+	"${scriptdir}/add.bash" "${ENEWUSERS}" "${ENEWGROUPS}" \
+		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
+}
+
+do_hook

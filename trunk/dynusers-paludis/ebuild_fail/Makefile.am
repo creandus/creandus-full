@@ -1,12 +1,16 @@
-MAINTAINERCLEANFILES = Makefile.in dynusers_failure.bash
-CLEANFILES = *~
-SUBDIRS = .
+MAINTAINERCLEANFILES = Makefile.in
+CLEANFILES = *~ dynusers_failure.bash
 
 failurehookdir = $(datadir)/paludis/hooks/common/
-
 failurehook_SCRIPTS = dynusers_failure.bash
 
 EXTRA_DIST = dynusers_failure.bash.in
+
+# The script "compiler"
+SUBST = $(top_srcdir)/tools/subst.bash
+
+% : %.in
+	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
 
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/

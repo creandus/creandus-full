@@ -1,13 +1,19 @@
 #!/bin/sh
-# Paludis hook for dynusers' addgroup.bash and adduser.bash scripts
-# Called after a package has been removed, to update the 
-# user/group database
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Paludis hook for dynusers. Called after a package has been removed, updated,
+# or re-merged.
+#
+# $Id: $
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-package=@PACKAGE@
-package=${package/-paludis}
-scriptdir=@datadir@/${package}
+do_hook() {
+	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
 
-# Remove only the first instance of CATEGORY/PF from the db files
-"${scriptdir}"/db.bash del "${CATEGORY}/${PF}"
+	# Remove only the first instance of CATEGORY/PF from the db files
+	"${scriptdir}/cleanup.bash" "${ENEWUSERS}" "${ENEWGROUPS}" \
+		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
+
+}
+
+do_hook
