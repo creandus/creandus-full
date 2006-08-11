@@ -1,22 +1,11 @@
 dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}} :
 
 dnl {{{ program, version
-AC_PREREQ(2.59)
-AC_INIT([accounts])
-AC_CONFIG_AUX_DIR(config)
-
-VERSION_MAJOR=0
-VERSION_MINOR=1
-VERSION_MICRO=0
-VERSION_FULL="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
-VERSION="$VERSION_FULL"
-
-AC_SUBST([VERSION_MAJOR])
-AC_SUBST([VERSION_MINOR])
-AC_SUBST([VERSION_MICRO])
-AC_SUBST([VERSION_FULL])
-
-AM_INIT_AUTOMAKE(dynusers-data, [$VERSION_FULL])
+AC_INIT([dynusers-data], [0.1.1], [pioto@pioto.org])
+AC_PREREQ([2.59])
+AC_CONFIG_SRCDIR([accounts])
+AC_CONFIG_AUX_DIR([config])
+AM_INIT_AUTOMAKE([1.9])
 dnl }}}
 
 dnl {{{ basic toolchain checks

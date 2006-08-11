@@ -4,3 +4,4 @@ shell: /bin/false
 home: /dev/null
 groups: 
 comment: user created by portage
+gid: 1-999

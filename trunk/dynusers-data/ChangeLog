@@ -1,3 +1,11 @@
-2006-07-18  Michael Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@pioto.org>
 
-	* Initial build - version 0.1.0
+	+ Release: 0.1.1
+
+	* accounts, user/foo: Update these files to match with the examples
+	given in the dynusers datafiles documentation (in the dynusers
+	package).
+
+2006-07-18  Mike Kelly  <pioto@pioto.org>
+
+	+ Release: 0.1.0
