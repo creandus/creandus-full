@@ -1,0 +1,49 @@
+#!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Delete a group managed by the dynusers scripts.
+#
+# $Id$
+
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+
+# Load the basic configuration
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
+
+main() {
+	# Read the command line arguments.
+	# Currently, we expect the following:
+	local deadgroup=${1} userspace=${2} root=${3:-/}
+	# XXX: Make sure we verify our command line args here.
+
+	# first, verify that the user to be deleted can be safely deleted
+	[[ -s ${DBDIR}/group/${deadgroup} ]] \
+		&& die "Group ${deadgroup} is still in use by some other" \
+			"package. Not removing."
+
+	for x in ${GROUP_BACKENDS} ; do
+		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash" ]]
+		then
+			echo "Running ${x}-${userspace}-groupdel..."
+			. "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash"
+			"${x}-${userspace}-groupdel" "${deadgroup}" "${root}" \
+				|| die "groupdel failed"
+		else
+			echo "Auth backend ${x} with userspace ${userspace}" \
+				"not supported by this script." >&2
+		fi
+	done
+
+	# Remove the empty database file
+	rm ${DBDIR}/group/${deadgroup}
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
+fi
+
+main $@
+# vim: ts=4 :

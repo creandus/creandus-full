@@ -1,0 +1,33 @@
+#!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Add all the provided users and groups to the system.
+#
+# $Id$
+
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+
+# Load the basic configuration
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+# Load things like die()
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
+
+main() {
+	# Read the command line arguments.
+	local eusers=${1} egroups=${2} pkgname=${3} userspace=${4} root=${5:-/}
+
+	[[ -z "${pkgname}" || -z "${userspace}" ]] \
+		|| die "Script expects 4 arguments: \"new users\"" \
+			"\"new groups\" pkgname userspace"
+
+	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
+fi
+
+main $@
+# vim: ts=4 :

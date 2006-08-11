@@ -1,0 +1,131 @@
+==============
+ Dynusers API
+==============
+
+:Author: Mike Kelly <pioto@pioto.org>
+:Date: $Date$
+:Revision: $Revision$
+
+Outline
+=======
+
+This is a sketch of the basic API for interfacing with the dynusers
+scripts.
+
+There are several different tasks which these scripts must do:
+
+1. Maintain a database of users and groups that have been added by the scripts.
+
+#. Add any users or groups requested by a new package to the system. At the
+   same time, the database should be updated.
+
+#. Revert any changes made if an install fails. This is done by calling
+   ``install_fail.bash`` with the same arguments as ``add.bash``. It will know 
+   what needs to be done to clean up from itself (e.g. roll back the database,
+   remove any unnecessary users or groups, etc).
+
+#. Clean up the database / etc when a package is uninstalled or up/down-graded
+   (``cleanup.bash``).
+
+#. Display information about the managed users and groups, including which
+   ones may be safely removed, and offer the operator a way to remove them
+   elegantly (meaning cleaning up the database as well as removing them from
+   the system). This is handled by the ``users.eselect`` script.
+
+Public API (For Package Managers)
+=================================
+
+Adding Users and Groups
+-----------------------
+
+This action is performed by the add.bash script. It should be run once, before
+the package is unpacked, compiled, or installed. It is invoked as follows::
+
+  add.bash "new users" "new groups" cpv userspace [root]
+
+The arguments it takes are:
+
+  ``"new users"``
+    A single parameter, a space-separated list of new users to be added for this
+    package.
+
+  ``"new groups"``
+    Same as above, only for groups.
+
+  ``cpv``
+    A unique identifier for the package about to be installed (category, name,
+    and version).
+
+  ``userspace``
+    A unique identifier of the userspace we are running in.  This is something
+    of the form *USERLAND-ELIBC*. For example, most GNU/Linux systems would
+    specify ``GNU-glibc``, while FreeBSD-based systems would use
+    ``BSD-FreeBSD``.
+
+  ``[root]``
+    An optional parameter, defines the system root to install into.  If not
+    provided, assumes /.
+
+Cleanup
+-------
+
+Cleaning up from an install can be done in two different cases.
+
+1. The install failed. In this case, we call ``install_fail.bash`` with the same
+   arguments as ``add.bash`` (described above).
+
+2. The install succeeded, but there was a previously existing version of the
+   package (in the same SLOT, on Gentoo). Or, the package was uninstalled. In
+   either case, we call ``cleanup.bash`` with the same arguments as ``add.bash``
+   (described above).
+
+Public API Usage Flowchart
+==========================
+
+.. figure:: ./API_flowchart.png
+
+   Installing a package with Dynusers
+
+.. figure:: ./API_flowchart2.png
+
+   Uninstalling a package with Dynusers
+
+Non-Public API (Internal Use Only)
+==================================
+
+Database
+--------
+
+These databases contain a newline separated list of package identifiers (name
+and version, usually), which mainly serves to tell the scripts when a user is
+no longer used by any package on the system.  Database actions should all go
+through the db.bash script.
+
+This can be invoked in 2 different modes, to add and remove an entry from the
+database::
+
+  db.bash add dbtype cpv newname userspace [root]
+
+  db.bash del cpv [root]
+
+The arguments are:
+
+  ``dbtype``
+    The database to be affected (either "user" or "group").
+
+  ``cpv``
+    A unique package identifier (category, name, and version).
+      
+  ``newname``
+    The name of the user or group to be added.
+
+  ``userspace``
+    A unique specifier for the userspace being run under, of the form of
+    *USERLAND-ELIBC*. For GNU/Linux, for example, this would be ``GNU-glibc``;
+    for FreeBSD, ``BSD-FreeBSD``.
+
+  ``[root]``
+    An optional parameter. Defines the system root to install into. If not
+    provided, it is assumed to be /.
+
+.. vim: set ft=glep tw=80 spell spelllang=en et :
