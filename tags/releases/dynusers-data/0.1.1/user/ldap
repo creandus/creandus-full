@@ -1,0 +1,10 @@
+# User for net-nds/openldap
+uid: 439
+#shell: undefined
+
+# Note: this should really be the result of $(get_libdir), but
+# for now at least this file is totally static...
+home: /usr/lib/openldap
+
+groups: ldap
+comment: user added for net-nds/openldap

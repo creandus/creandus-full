@@ -1,0 +1,6 @@
+# User added for postgresql
+uid: 70
+shell: /bin/bash
+home: /var/lib/postgresql
+groups: postgres
+comment: user added for dev-db/postgresql

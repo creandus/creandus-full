@@ -1,0 +1,8 @@
+# A sample file for the xfs user, added for the x font server package
+# x11-apps/xfs or x11-base/xorg-x11 with USE="xfs"
+uid: 33
+# shell not specified, should fall back on a sane default for the 
+# userspace
+home: /etx/X11/fs
+groups: xfs
+comment: user added for xfs by x11-apps/xfs

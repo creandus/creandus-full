@@ -1,0 +1,6 @@
+# User for the various cron daemons
+uid: 16
+#shell: not defined
+home: /var/spool/cron
+groups: cron
+comment: user added by portage for cron daemons
