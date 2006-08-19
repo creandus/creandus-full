@@ -1,0 +1,267 @@
+dscl(1)                   BSD General Commands Manual                  dscl(1)
+
+NNAAMMEE
+     ddssccll -- Directory Service command line utility
+
+SSYYNNOOPPSSIISS
+     ddssccll [options] [_d_a_t_a_s_o_u_r_c_e [command]]
+
+          options:
+                --pp           prompt for password
+                --uu _u_s_e_r      authenticate as user
+                --PP _p_a_s_s_w_o_r_d  authentication password
+                --rraaww         don't strip off prefix from DirectoryService API
+                             constants
+                --uurrll         print record attribute values in URL-style encod-
+                             ing
+                --qq           quiet - no interactive prompt
+
+          commands:
+                --rreeaadd [_p_a_t_h [_k_e_y ...]]
+                --lliisstt _p_a_t_h [key]
+                --sseeaarrcchh _p_a_t_h _k_e_y _v_a_l
+                --ccrreeaattee _r_e_c_o_r_d___p_a_t_h [_k_e_y [_v_a_l ...]]
+                --aappppeenndd _r_e_c_o_r_d___p_a_t_h _k_e_y _v_a_l ...
+                --mmeerrggee _r_e_c_o_r_d___p_a_t_h _k_e_y _v_a_l ...
+                --ddeelleettee _p_a_t_h [_k_e_y [_v_a_l ...]]
+                --cchhaannggee _r_e_c_o_r_d___p_a_t_h _k_e_y _o_l_d___v_a_l _n_e_w___v_a_l
+                --cchhaannggeeii _r_e_c_o_r_d___p_a_t_h _k_e_y _v_a_l___i_n_d_e_x _n_e_w___v_a_l
+                --ppaasssswwdd _u_s_e_r___p_a_t_h [_n_e_w___p_a_s_s_w_o_r_d | _o_l_d___p_a_s_s_w_o_r_d _n_e_w___p_a_s_s_w_o_r_d]
+
+          available only in interactive mode:
+                --ccdd _d_i_r
+                --ppuusshhdd [_d_i_r]
+                --ppooppdd
+                --aauutthh [_u_s_e_r [_p_a_s_s_w_o_r_d]]
+                --aauutthhoonnllyy [_u_s_e_r [_p_a_s_s_w_o_r_d]]
+                --qquuiitt
+
+DDEESSCCRRIIPPTTIIOONN
+     ddssccll is a general-purpose utility for operating on Directory Service
+     directory nodes.  Its commands allow one to create, read, and manage
+     Directory Service data.  If invoked without any commands, ddssccll runs in an
+     interactive mode, reading commands from standard input.  Interactive pro-
+     cessing is terminated by the _q_u_i_t command.  Leading dashes ("-") are
+     optional for all commands.
+
+     ddssccll operates on a datasource specified on the command line.  This may be
+     a node name or a Mac OS X Server (10.2 or later) host specified by DNS
+     hostname or IP address.  Node names may be absolute paths beginning with
+     a slash ("/"), or relative domain paths beginning with a dot (".") char-
+     acter, which specifies the local domain, or "..", specifying the local
+     domain's parent.  If the hostname or IP address form is used then the
+     user must specify the --uu option and either the --PP of --pp options to spec-
+     ify an administrative user and password on the remote host to authenti-
+     cate with to the remote host. The exception to this is if "localhost" is
+     specified.
+
+PPAATTHH SSPPEECCIIFFIICCAATTIIOONN
+     There are two modes of operation when specifying paths to operate on. The
+     two modes correspond to whether the datasource is a node or a host. In
+     the case of specifying a node, the top level of paths will be record
+     types. Example top level paths would be:
+
+           /Users/alice
+           /Groups/admin
+
+     In the case of specifying a host as a data source, the top level of paths
+     correspond to Open Directory plug-ins and Search Paths. One can specify
+     the plug-in to traverse to a node name, after which the paths are equiva-
+     lent to the former usage. The following might be the equivalent paths as
+     the above paths:
+
+           /NetInfo/root/Users/alice
+           /LDAPv3/10.0.1.42/Groups/admin
+
+     If path components contain keys or values with embedded slash characters,
+     the slash characters must be escaped with a leading backslash character.
+     Since the shell also processes escape characters, an extra backslash is
+     required to correctly specify an escape.  For example, to read a mount
+     record with the name "ldapserver:/Users" in the "/Mounts" path, the fol-
+     lowing path would be used:
+
+           ddssccll  . --rreeaadd /Mounts/ldaphost:\\/Users
+
+     All pathnames are case-sensitive.
+
+     NOTE: You must use double quotes to combine text into a single value. If
+     you use single quotes then they will actually become part of the value.
+     Please see the given append example below.
+
+CCOOMMMMAANNDDSS
+     The action of each command is described below.  Some commands have
+     aliases.  For example, "cat" and "." are aliases for "read".  Command
+     aliases are listed in parentheses.
+
+   rreeaadd ((ccaatt ..))
+     Usage: read [_p_a_t_h [_k_e_y ...]]
+
+     Prints a directory.  Each of the properties are printed one per line.
+     The property key is followed by a colon, then a space-separated list of
+     the values for that property.  Note that a value which contains embedded
+     spaces will appear identical to a pair of values.
+
+     If The --rraaww flag for raw output has been given, then _r_e_a_d prints the full
+     DirectoryService API constant for record and attribute types.
+
+     If the --uurrll flag has been specified then printed record path attribute
+     values are encoded in the style of URLs. This is useful if a script or
+     program is trying to process the output since values will not have any
+     spaces or other control characters.
+
+   lliisstt ((llss))
+     Usage: list _p_a_t_h
+
+     Lists the subdirectories of the given directory.  Subdirectories are
+     listed one per line.  In the case of listing a search path, the names are
+     preceded by an index number that can act as a shortcut and used in place
+     of the name when specifying a path.
+
+     When used in interactive mode, the path is optional.  With no path given,
+     the current directory will be used.
+
+   sseeaarrcchh
+     _p_a_t_h _k_e_y _v_a_l
+
+     Searches for records that match a pattern.  The search is rooted at the
+     given path.  The path may be a node path or a record type path.  Valid
+     keys are Directory Service record attribute types.
+
+   ccrreeaattee ((mmkk))
+     Usage: create _r_e_c_o_r_d___p_a_t_h [_k_e_y [_v_a_l ...]]
+
+     Creates a record, property, or value.  If only a record path is given,
+     the _c_r_e_a_t_e command will create the record if it does not exist.  If a key
+     is given, then a property with that key will be created.
+
+     WARNING - If a property with the given key already exists, it will be
+     destroyed and a new property will be created in its place.  To add values
+     to an existing property, use the _a_p_p_e_n_d or _m_e_r_g_e commands.
+
+     If values are included in the command, these values will be set for the
+     given key.
+
+     NOTE - Not all directory nodes support a property without a value. An
+     error will be given if you attempt to create a property with no value in
+     such a directory node.
+
+   aappppeenndd
+     Usage: append _r_e_c_o_r_d___p_a_t_h _k_e_y _v_a_l ...
+
+     Appends one or more values to a property in a given record.  The property
+     is created if it does not exist.
+
+   mmeerrggee
+     Usage: merge _r_e_c_o_r_d___p_a_t_h _k_e_y _v_a_l ...
+
+     Appends one or more values to a property in a given directory if the
+     property does not already have those values.  The property is created if
+     it does not exist.
+
+   cchhaannggee
+     Usage: change _r_e_c_o_r_d___p_a_t_h _k_e_y _o_l_d___v_a_l _n_e_w___v_a_l
+
+     Replaces the given old value in the list of values of the given key with
+     the new value in the specified record.
+
+   cchhaannggeeii
+     Usage: changei _p_a_t_h _k_e_y _i_n_d_e_x _v_a_l
+
+     Replaces the value at the given index in the list of values of the given
+     key with the new value in the specified record.  _i_n_d_e_x is an integer
+     value.  An index of 1 specifies the first value.  An index greater than
+     the number of values in the list will result in an error.
+
+   ddeelleettee ((rrmm))
+     Usage: delete _p_a_t_h [_k_e_y [_v_a_l ...]]
+
+     Delete a directory, property, or value.  If a directory path is given,
+     the _d_e_l_e_t_e command will delete the directory.  This can only be used on
+     record type and record paths.  If a key is given, then a property with
+     that key will be deleted.  If one or more values are given, those values
+     will be removed from the property with the given key.
+
+   ppaasssswwdd
+     Usage: passwd _u_s_e_r___p_a_t_h [_n_e_w___p_a_s_w_o_r_d | _o_l_d___p_a_s_s_w_o_r_d _n_e_w___p_a_s_w_o_r_d]
+
+     Changes a password for a user. The user must be specified by full path,
+     not just a username.  If you are authenticated to the node (either by
+     specifying the --uu and --PP flags or by using the auth command when in
+     interactive node) then you can simply specify a new password.  If you are
+     not authenticated then the user's old password must be specified.  If
+     passwords are not specified while in interactive mode, you will be
+     prompted for them.
+
+IINNTTEERRAACCTTIIVVEE CCOOMMMMAANNDDSS
+   ccdd
+     Usage: cd dir
+
+     Sets the current directory.  Path names for other ddssccll commands may be
+     relative to the current directory.
+
+   ppuusshhdd ((ppdd))
+     Usage: pushd path
+
+     Similar to the pushd command commonly found in Unix shells.  When a path
+     is specified it sets the current directory while pushing the previous
+     directory on to the directory stack.  If no path is specified it
+     exchanges the top two elements of the directory stack.  It will also
+     print the final directory stack.
+
+   ppooppdd
+     Usage: popd
+
+     Pops the directory stack and returns to the new top directory.  It will
+     also print the final directory stack.
+
+   aauutthh ((ssuu))
+     Usage: auth [_u_s_e_r [_p_a_s_s_w_o_r_d]]
+
+     Authenticate as the named user, or as "root" if no user is specified.  If
+     a password is supplied, then that password is used for authentication,
+     otherwise the command prompts for a password.
+
+     If ddssccll is run in host mode, then when this command is run the current
+     directory must be in the subdirectories of a node.
+
+   aauutthhoonnllyy
+     Usage: authonly [_u_s_e_r [_p_a_s_s_w_o_r_d]]
+
+     Used to verify the password of a named user, or of "root" if no user is
+     specified.  If a password is supplied, then that password is used for
+     authentication, otherwise the command prompts for a password.
+
+     If ddssccll is run in host mode, then when this command is run the current
+     directory must be in the subdirectories of a node.
+
+   qquuiitt ((qq))
+     Usage: quit
+
+     Ends processing of interactive commands and terminates the program.
+
+   ccoommmmaanndd hhiissttoorryy
+     The up and down arrow keys will scan through the command history.
+
+   ttaabb ccoommpplleettiioonn
+     When pathnames are being typed, pressing the tab key will result in a
+     search to auto-complete the typed partial subdirectory name. It will also
+     attempt to correct capitilization in the process.
+
+EEXXAAMMPPLLEESS
+     --vviieeww aa rreeccoorrdd iinn tthhee llooccaall ddiirreeccttoorryy nnooddee
+              dscl . -read /Users/www
+
+     --ccrreeaattee oorr rreeppllaaccee tthhee UUsseerrSShheellll aattttrriibbuuttee vvaalluuee ffoorr tthhee wwwwww uusseerr rreeccoorrdd
+              dscl . -create /Users/www UserShell /usr/bin/false
+
+     --lliisstt tthhee uunniiqquueeIIDD vvaalluueess ffoorr aallll uusseerr rreeccoorrddss oonn aa ggiivveenn nnooddee
+              dscl /LDAPv3/ldap.company.com -list /Users UniqueID
+
+     --aappppeenndd aa vvaalluuee tthhaatt hhaass ssppaacceess iinn iitt
+              dscl . -append /Users/www Comment "This is a comment"
+
+SSEEEE AALLSSOO
+     DirectoryService(8), DirectoryServiceAttributes(7)
+
+MacOSX                          August 25, 2003                         MacOSX
+
