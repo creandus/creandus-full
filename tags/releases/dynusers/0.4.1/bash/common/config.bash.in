@@ -1,0 +1,45 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# loads the basic configuration, e.g. which authentication system to use.
+#
+# $Id$
+
+# NSSWITCH_CONF: The nsswitch.conf file, which contains the
+# configuration of which backends to use. See nsswitch.conf(5) for
+# more info.
+NSSWITCH_CONF="${NSSWITCH_CONF:-@sysconfdir@/nsswitch.conf}"
+
+# DATADIR: The directory where the user and group data is contained.
+# In reality this should be the "accounts" directory of their portage
+# profile, at least in Gentoo. Other distros would use an appropriate
+# directory here.
+#DATADIR="/etc/make.profile/accounts"
+DATADIR="${DATADIR:-@localstatedir@/@PACKAGE@/data}"
+
+# DBDIR: The directory which contains the database of auto-added users. 
+# It is made up of a list of files in 2 subdirs, users and groups, named 
+# for the added user or group. Each line of the file contains the full 
+# package name and version as given by the package management system. 
+# When a package is uninstalled, it should be removed from any of these 
+# files. Then, the userspace update-users [or similar] script can 
+# properly know when a dynamically-added user can be removed from the 
+# system.
+DBDIR="${DBDIR:-@localstatedir@/@PACKAGE@/db}"
+
+# Get a list of the backend databases we're going to use
+## XXX: Make these regexps better, more general
+if [[ -f "${NSSWITCH_CONF}" ]] ; then
+	PASSWD_BACKENDS=$(grep ^passwd: "${NSSWITCH_CONF}" |cut -d: -f2)
+	GROUP_BACKENDS=$(grep ^group: "${NSSWITCH_CONF}" |cut -d: -f2)
+fi
+
+# Have some sane fallbacks
+# XXX: Maybe have these defaults be determined somewhat by our USERSPACE?
+[[ -z "${PASSWD_BACKENDS}" ]] && PASSWD_BACKENDS="compat"
+[[ -z "${GROUP_BACKENDS}" ]] && GROUP_BACKENDS="compat"
+
+# This is necessary because a false evaluation above isn't cause for the
+# entire script to fail.
+true
+# vim: ts=4 :
