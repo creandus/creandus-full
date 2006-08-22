@@ -1,3 +1,17 @@
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
+	+ Release: 0.4.0
+
+	* tools/: Kill those stupid hacked-up scripts. Just use a big 'ol sed
+	in Makefile.am instead.
+
+	* NEWS: Prepare for release.
+
+	* dynusers_cleanup.bash.in, Makefile.am: Our cleanup hook now happens
+	during ebuild_preinst_pre. We make use of has_version and best_version
+	to figure out the old version in the current slot (if any), and then
+	we clean it from the database.
+
 2006-08-11  Mike Kelly  <pioto@pioto.org>
 
 	* (everything): Drop all the ebuild_* directories, and keep our

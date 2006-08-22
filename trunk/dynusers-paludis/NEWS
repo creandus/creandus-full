@@ -1,2 +1,10 @@
 This is just a testing version. It is FAR from ready for production use. 
 Feel free to send me some test cases to run everything through, though.
+
+This is a summary of what has changed between released versions. More detailed
+information may be found in the ChangeLog.
+
+0.4.0:
+    New Features:
+	- Major code cleanup.
+	- Updated to support  =dynusers-0.4*

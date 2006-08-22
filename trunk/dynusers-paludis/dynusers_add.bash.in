@@ -10,7 +10,7 @@
 do_hook() {
 	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
 
-	"${scriptdir}/add.bash" "${ENEWUSERS}" "${ENEWGROUPS}" \
+	"${scriptdir}/add.bash" "${EUSERS}" "${EGROUPS}" \
 		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
 }
 

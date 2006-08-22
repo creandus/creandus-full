@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = dist-bzip2 no-dist-gzip
 
-postrmhookdir = $(datadir)/paludis/hooks/ebuild_postrm_post/
-postrmhook_SCRIPTS = dynusers_cleanup.bash
+preinsthookdir = $(datadir)/paludis/hooks/ebuild_preinst_pre/
+preinsthook_SCRIPTS = dynusers_cleanup.bash
 
 commonhookdir = $(datadir)/paludis/hooks/common/
 commonhook_SCRIPTS = dynusers_failure.bash
@@ -10,22 +10,28 @@ presetuphookdir = $(datadir)/paludis/hooks/ebuild_setup_pre/
 presetuphook_SCRIPTS = dynusers_add.bash
 
 CLEANFILES = *~ done-check \
-	$(postrmhook_SCRIPTS) \
+	$(preinsthook_SCRIPTS) \
 	$(commonhook_SCRIPTS) \
 	$(presetuphook_SCRIPTS)
 
 MAINTAINERCLEANFILES = Makefile.in configure config/* aclocal.m4 \
 			INSTALL COPYING
 
-EXTRA_DIST = autogen.bash tools \
-	$(foreach f, $(postrmhook_SCRIPTS) \
-	$(commonhook_SCRIPTS) $(presetuphook_SCRIPTS), $(f).in)
+EXTRA_DIST = autogen.bash \
+	$(foreach f, $(preinsthook_SCRIPTS) $(commonhook_SCRIPTS) \
+		$(presetuphook_SCRIPTS), $(f).in)
 
-# The script "compiler"
-SUBST = $(top_srcdir)/tools/subst.bash
+# Do the proper substitutions in our scripts
+dosed=@SED@ \
+	-e 's,\@SED\@,@SED@,g' \
+	-e 's,\@BASH\@,@BASH@,g' \
+	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
+	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@localstatedir\@,@localstatedir@,g' \
+	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
+	$(dosed) $< > $@
 
 # Setup the symlinks for the failure hooks.
 install-data-local:

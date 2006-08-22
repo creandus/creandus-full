@@ -9,11 +9,19 @@
 
 do_hook() {
 	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
+	${PALUDIS_COMMAND} --has-version "${CATEGORY}/${PN}:${SLOT}" \
+		>/dev/null \
+		|| return 0 
+
+	local old_cpv=`${PALUDIS_COMMAND} --best-version \
+		"${CATEGORY}/${PN}:${SLOT}"`
+
+	einfo "Cleaning \"${old_cpv}\" from dynusers database."
 
 	# Remove only the first instance of CATEGORY/PF from the db files
-	"${scriptdir}/cleanup.bash" "${ENEWUSERS}" "${ENEWGROUPS}" \
-		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
-
+	"${scriptdir}/cleanup.bash" "${EUSERS}" "${EGROUPS}" \
+		"${old_cpv}" "${USERLAND}-${ELIBC}"
 }
 
 do_hook
+# vim: ts=4 :

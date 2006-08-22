@@ -10,7 +10,7 @@ do_hook() {
 	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
 
 	# Remove only the first instance of CATEGORY/PF from the db files
-	"${scriptdir}/install_fail.bash" "${ENEWUSERS}" "${ENEWGROUPS}" \
+	"${scriptdir}/install_fail.bash" "${EUSERS}" "${EGROUPS}" \
 		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
 }
 

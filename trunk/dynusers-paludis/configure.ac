@@ -21,6 +21,14 @@ if test x$BASH = "x" ; then
 fi
 dnl }}}
 
+dnl {{{ check for sed
+unset SED
+AC_PATH_PROGS(SED, sed)
+if test x$SED = "x" ; then
+	AC_MSG_ERROR([sed is required])
+fi
+dnl }}}
+
 dnl {{{ substitution macros
 SCRIPTDIR="${datadir}/${PACKAGE/-paludis}"
 AC_SUBST(SCRIPTDIR)
