@@ -1,22 +1,30 @@
 #!/bin/sh
-REPODIR=${HOME}/svn/glep0027/trunk
-MODULES=
-WORKDIR=.
-DISTDIR=${HOME}/openhostingHome/www/gentoo/distfiles
+REPODIR=${REPODIR:-${HOME}/svn/glep0027/trunk}
+MODULES=${MODULES:-}
+WORKDIR=${WORKDIR:-.}
+DISTDIR=`pwd`
+MAKEOPTS=${MAKEOPTS:-"-j1"}
 
 cd ${WORKDIR}
 
-echo ">>> Building list of dynusers modules: "
-for i in `/bin/ls -d ${REPODIR}/*/` ; do
-	if [[ -d ${i} ]] ; then
-		i=`basename ${i/\/}`
-		echo "  + ${i}"
-		MODULES="${MODULES} ${i}"
-	fi
-done
+if [[ -z "${MODULES}" ]] ; then
+	echo ">>> Building list of dynusers modules: "
+	for i in `/bin/ls -d ${REPODIR}/*/` ; do
+		if [[ -d ${i} ]] ; then
+			i=`basename ${i/\/}`
+			echo "  + ${i}"
+			MODULES="${MODULES} ${i}"
+		fi
+	done
+fi
 
 echo ">>> Removing old trees..."
-rm -rf ${MODULES}
+for x in ${MODULES} ; do
+	if [[ -e "${x}" ]] ; then
+		chmod -R u+w ${x}
+		rm -rf ${x}
+	fi
+done
 
 echo ">>> Copying current tree..."
 mkdir ${MODULES}
@@ -51,7 +59,7 @@ for i in ${MODULES} ; do
 	test -f ${i}/Makefile || continue
 	echo "  + ${i}"
 	cd ${i}
-	make || exit ${?}
+	make ${MAKEOPTS} || exit ${?}
 	cd -
 done
 
@@ -60,7 +68,7 @@ for i in ${MODULES} ; do
 	test -f ${i}/Makefile || continue
 	echo "  + ${i}"
 	cd ${i}
-	make distcheck || exit ${?}
+	make ${MAKEOPTS} distcheck || exit ${?}
 	cd -
 done
 
@@ -72,3 +80,4 @@ for i in ${MODULES} ; do
 	cp -v ${i}-*.tar.bz2 ${DISTDIR}
 	cd -
 done
+# vim: ts=4 :
