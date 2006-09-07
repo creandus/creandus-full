@@ -1,3 +1,13 @@
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
+	* configure.ac, NEWS: Prepare for 0.5.0
+
+	+ Release: 0.5.0
+
+2006-09-06  Mike Kelly  <pioto@gentoo.org>
+
+	* (all): Update my email address.
+
 2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.4.0
