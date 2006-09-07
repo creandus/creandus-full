@@ -1,0 +1,67 @@
+#!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Manage the dynusers database
+#
+# $Id$
+
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+
+# Load the basic configuration.
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
+
+main() {
+	case "${1}" in
+		add)
+			# Read our remaining args
+			# Options: [user|group] [pkgname] [newname]
+			local dbtype="${2}" pkgname="${3}"
+			local newname="${4}" userspace="${5}"
+			local root="${6:-/}"
+
+			[[ -z "${dbtype}" ]] && die "missing required arg: dbtype"
+			[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
+			[[ -z "${newname}" ]] && die "missing required arg: newname"
+
+			[[ "${dbtype}" != "user" && "${dbtype}" != "group" ]] \
+				&& die "Invalid DBTYPE. Use user or group."
+
+			echo "${pkgname}" >> \
+				"${root}${DBDIR}/${dbtype}/${newname}"
+
+			# For the sake of users.eselect, save our current USERSPACE
+			[[ ! -f "${DBDIR}/userspace" ]] \
+				&& echo "${userspace}" >>"${DBDIR}/userspace"
+			;;
+		del)
+			# Read our remaining args
+			local pkgname="${2}" root="${3:-/}"
+	
+			[[ -z "${pkgname}" ]] \
+				&& die "Del option expects a package name."
+
+			# Replace any /s with \/s so as to not mess up sed
+			pkgname=${pkgname/\//\\/}
+
+			# Remove only the first instance of pkgname from the 
+			# db files
+			for x in "${root}${DBDIR}"/{user,group}/* ; do
+				[[ -d "${x}" ]] || continue
+				sed -i /^${pkgname}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\}	"${x}"
+			done
+			;;
+		*)
+			die "Invalid action. Valid actions are add, del."
+			;;
+	esac
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
+fi
+
+main "$@"
+# vim: ts=4 :
