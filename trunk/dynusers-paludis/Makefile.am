@@ -1,13 +1,13 @@
 AUTOMAKE_OPTIONS = dist-bzip2 no-dist-gzip
 
 preinsthookdir = $(datadir)/paludis/hooks/ebuild_preinst_pre/
-preinsthook_SCRIPTS = dynusers_cleanup.bash
+preinsthook_SCRIPTS = creandus_cleanup.bash
 
 commonhookdir = $(datadir)/paludis/hooks/common/
-commonhook_SCRIPTS = dynusers_failure.bash
+commonhook_SCRIPTS = creandus_failure.bash
 
 presetuphookdir = $(datadir)/paludis/hooks/ebuild_setup_pre/
-presetuphook_SCRIPTS = dynusers_add.bash
+presetuphook_SCRIPTS = creandus_add.bash
 
 CLEANFILES = *~ done-check \
 	$(preinsthook_SCRIPTS) \
@@ -44,12 +44,12 @@ install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_merge_fail/
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_postinst_fail/
 	$(mkinstalldirs) $(DESTDIR)$(datadir)/paludis/hooks/ebuild_tidyup_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_compile_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_test_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_install_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_strip_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_preinst_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_merge_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_postinst_fail/
-	ln -sf ../common/dynusers_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_tidyup_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_unpack_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_compile_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_test_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_install_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_strip_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_preinst_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_merge_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_postinst_fail/
+	ln -sf ../common/creandus_failure.bash $(DESTDIR)$(datadir)/paludis/hooks/ebuild_tidyup_fail/

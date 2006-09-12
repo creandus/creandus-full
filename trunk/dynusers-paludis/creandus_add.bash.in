@@ -2,15 +2,15 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# Paludis hook for dynusers.  Called when a build fails.
+# Paludis hook for creandus. Called before installing to add all necessary
+# users and groups.
 #
 # $Id: $
 
 do_hook() {
 	local scriptdir="${SCRIPTDIR:-@SCRIPTDIR@}"
 
-	# Remove only the first instance of CATEGORY/PF from the db files
-	"${scriptdir}/install_fail.bash" "${EUSERS}" "${EGROUPS}" \
+	"${scriptdir}/add.bash" "${EUSERS}" "${EGROUPS}" \
 		"${CATEGORY}/${PF}" "${USERLAND}-${ELIBC}"
 }
 

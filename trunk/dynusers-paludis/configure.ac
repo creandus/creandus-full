@@ -1,9 +1,9 @@
 dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}} :
 
 dnl {{{ program, version
-AC_INIT([dynusers-paludis], [0.5.0], [pioto@gentoo.org])
+AC_INIT([creandus-paludis], [0.5.0], [pioto@gentoo.org])
 AC_PREREQ([2.59])
-AC_CONFIG_SRCDIR([dynusers_add.bash.in])
+AC_CONFIG_SRCDIR([creandus_add.bash.in])
 AC_CONFIG_AUX_DIR([config])
 AM_INIT_AUTOMAKE([1.9])
 dnl }}}
