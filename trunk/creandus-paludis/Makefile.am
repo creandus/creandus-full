@@ -31,7 +31,8 @@ dosed=@SED@ \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(dosed) $< > $@
+	@echo DOSED $@
+	@$(dosed) $< > $@
 
 # Setup the symlinks for the failure hooks.
 install-data-local:
