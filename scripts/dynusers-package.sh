@@ -1,14 +1,14 @@
 #!/bin/sh
-REPODIR=${REPODIR:-${HOME}/svn/glep0027/trunk}
+REPODIR=${REPODIR:-${HOME}/svn/creandus/trunk}
 MODULES=${MODULES:-}
-WORKDIR=${WORKDIR:-.}
+WORKDIR=${WORKDIR:-$(readlink -f .)}
 DISTDIR=`pwd`
 MAKEOPTS=${MAKEOPTS:-"-j1"}
 
-cd ${WORKDIR}
+pushd ${WORKDIR}
 
 if [[ -z "${MODULES}" ]] ; then
-	echo ">>> Building list of dynusers modules: "
+	echo ">>> Building list of creandus modules: "
 	for i in `/bin/ls -d ${REPODIR}/*/` ; do
 		if [[ -d ${i} ]] ; then
 			i=`basename ${i/\/}`
@@ -30,54 +30,54 @@ echo ">>> Copying current tree..."
 mkdir ${MODULES}
 for i in ${MODULES} ; do
 	echo "  + ${i}"
-	cd ${i}
+	pushd ${i} >/dev/null
 	cp -r ${REPODIR}/${i}/* .
 	find -type d -name .svn |xargs rm -rf
-	cd -
+	popd >/dev/null
 done
 
 echo ">>> Running ./autogen.bash..."
 for i in ${MODULES} ; do
 	test -f ${i}/autogen.bash || continue
 	echo "  + ${i}"
-	cd ${i}
+	pushd ${i} >/dev/null
 	./autogen.bash || exit ${?}
-	cd -
+	popd >/dev/null
 done
 
 echo ">>> Running ./configure..."
 for i in ${MODULES} ; do
 	test -f ${i}/configure || continue
 	echo "  + ${i}"
-	cd ${i}
+	pushd ${i} >/dev/null
 	./configure || exit ${?}
-	cd -
+	popd >/dev/null
 done
 
 echo ">>> Running make..."
 for i in ${MODULES} ; do
 	test -f ${i}/Makefile || continue
 	echo "  + ${i}"
-	cd ${i}
+	pushd ${i} >/dev/null
 	make ${MAKEOPTS} || exit ${?}
-	cd -
+	popd >/dev/null
 done
 
 echo ">>> Running make distcheck..."
 for i in ${MODULES} ; do
 	test -f ${i}/Makefile || continue
 	echo "  + ${i}"
-	cd ${i}
+	pushd ${i} >/dev/null
 	make ${MAKEOPTS} distcheck || exit ${?}
-	cd -
+	popd >/dev/null
 done
 
 echo "All tests succeeded! :)"
 
 echo ">>> Copying all distfiles to ${DISTDIR}..."
 for i in ${MODULES} ; do
-	cd ${i}
+	pushd ${i} >/dev/null
 	cp -v ${i}-*.tar.bz2 ${DISTDIR}
-	cd -
+	popd >/dev/null
 done
 # vim: ts=4 :
