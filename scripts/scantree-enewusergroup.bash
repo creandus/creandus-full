@@ -31,7 +31,7 @@ echo -n "-e enewuser -e enewgroup" >> $ebuild_grep_cmd
 for ec in $(< $eclass_list) ; do
 	ec=${ec/eclass\/}
 	ec=${ec/.eclass}
-	echo -n " -einherit.\\*$ec" >> $ebuild_grep_cmd
+	echo -n " -einherit.\\\\*$ec" >> $ebuild_grep_cmd
 done
 echo >> $ebuild_grep_cmd
 )
@@ -56,4 +56,4 @@ cat $ebuild_list |sort -u
 )
 
 popd >/dev/null
-#rm -f $ebuild_list $eclass_list $ebuild_grep_cmd
+rm -f $ebuild_list $eclass_list $ebuild_grep_cmd
