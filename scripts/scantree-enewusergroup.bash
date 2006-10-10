@@ -12,7 +12,6 @@ ebuild_grep_cmd=$(mktemp -t ebuild_grep_cmd.XXXXXX)
 
 pushd $PORTDIR >/dev/null
 
-time (
 echo "Generating eclass list:" 1>&2
 
 # Generate list of matching eclasses
@@ -22,11 +21,11 @@ for ec in eclass/*.eclass ; do
 	grep -e enewuser -e enewgroup $ec >/dev/null 2>&1 \
 		&& echo $ec >> $eclass_list
 done
-)
 
-time (
 echo "Generating ebuild grep command:" 1>&2
 
+# Build the arguments for our grep of each ebuild, so we only have to touch
+# each ebuild once.
 echo -n "-e enewuser -e enewgroup" >> $ebuild_grep_cmd
 for ec in $(< $eclass_list) ; do
 	ec=${ec/eclass\/}
@@ -34,9 +33,7 @@ for ec in $(< $eclass_list) ; do
 	echo -n " -einherit.\\\\*$ec" >> $ebuild_grep_cmd
 done
 echo >> $ebuild_grep_cmd
-)
 
-time (
 echo "Generating ebuild list:" 1>&2
 
 # Generate list of matching ebuilds
@@ -46,14 +43,11 @@ for c in $(< profiles/categories) ; do
 			&& echo $e >> $ebuild_list
 	done
 done
-)
 
-time (
 echo "Generating final list:" 1>&2
 
 # Generate our final list
 cat $ebuild_list |sort -u
-)
 
 popd >/dev/null
 rm -f $ebuild_list $eclass_list $ebuild_grep_cmd
