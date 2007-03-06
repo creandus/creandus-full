@@ -1,0 +1,11 @@
+# ChangeLog for sys-apps/dynusers
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  07 Sep 2006; <pioto@gentoo.org> +dynusers-0.5.0.ebuild:
+  Added dynusers 0.5.0 ebuild. This version gets its data from portage profiles,
+  not a separate package.
+
+  06 Sep 2006; <pioto@gentoo.org> +dynusers-0.4.3.ebuild:
+  Initial ebuild for dynusers 0.4.3.
+
