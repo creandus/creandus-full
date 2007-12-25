@@ -1,24 +1,24 @@
 ChangeLog for Creandus' Paludis Hooks
 
-2006-09-22 Mike Kelly <pioto@gentoo.org>
+2006-09-22 Mike Kelly <pioto@pioto.org>
 
 	* ChangeLog: Clean up a bit.
 
-2006-09-22 Mike Kelly <pioto@gentoo.org>
+2006-09-22 Mike Kelly <pioto@pioto.org>
 
 	* Makefile.am: Beautify the DOSED stuff a bit.
 
-2006-09-07 Mike Kelly <pioto@gentoo.org>
+2006-09-07 Mike Kelly <pioto@pioto.org>
 
 	* configure.ac, NEWS: Prepare for 0.5.0
 
 	+ Release: 0.5.0
 
-2006-09-06 Mike Kelly <pioto@gentoo.org>
+2006-09-06 Mike Kelly <pioto@pioto.org>
 
 	* (all): Update my email address.
 
-2006-08-22 Mike Kelly <pioto@gentoo.org>
+2006-08-22 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.4.0
 
@@ -32,12 +32,12 @@ ChangeLog for Creandus' Paludis Hooks
 	to figure out the old version in the current slot (if any), and then
 	we clean it from the database.
 
-2006-08-11 Mike Kelly <pioto@gentoo.org>
+2006-08-11 Mike Kelly <pioto@pioto.org>
 
 	* (everything): Drop all the ebuild_* directories, and keep our
 	scripts all in the top level.
 
-2006-08-11 Mike Kelly <pioto@gentoo.org>
+2006-08-11 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_fail/dynusers_failure.bash.in,
 	ebuild_postrm_post/dynusers_del.bash.in,
@@ -53,39 +53,39 @@ ChangeLog for Creandus' Paludis Hooks
 
 	* configure.ac: "Modernize" our autoconf stuff.
 
-2006-07-31 Mike Kelly <pioto@gentoo.org>
+2006-07-31 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.3.1
 
 	* ebuild_fail/Makefile.am: Fix a problem which was making a parallel
 	make install with -j5 fail, while -j3, -j1 worked fine.
 
-2006-07-31 Mike Kelly <pioto@gentoo.org>
+2006-07-31 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.3.0
 
-2006-07-31 Mike Kelly <pioto@gentoo.org>
+2006-07-31 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_*/*bash*: Switch all called scripts from dynusers to end in
 	.bash instead of just .sh. Prepare for 0.3.0 release.
 
-2006-07-29 Mike Kelly <pioto@gentoo.org>
+2006-07-29 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.2.0
 
 	* ebuild_fail/: Add failure hook so we can clean up from ourselves.
 
-2006-07-27 Mike Kelly <pioto@gentoo.org>
+2006-07-27 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_postrm_post/dynusers.bash.in: Remove the now unnecessary
 	sourcing of ${scriptdir}/common/config.
 
-2006-07-26 Mike Kelly <pioto@gentoo.org>
+2006-07-26 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_setup_pre/dynusers.bash.in: Use the add.sh from dynusers to
 	do all the heavy lifting, we just feed it a few raw variables.
 
-2006-07-24 Mike Kelly <pioto@gentoo.org>
+2006-07-24 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_postrm_post/dynusers.bash.in: Make use of ${scriptdir}/db.sh
 	to interface with the backend db instead of doing it directly
@@ -94,7 +94,7 @@ ChangeLog for Creandus' Paludis Hooks
 	* ebuild_postrm_post/dynusers.bash.in: Drop the s from the user and
 	group DBDIR subdirs.
 
-2006-07-20 Mike Kelly <pioto@gentoo.org>
+2006-07-20 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.1.3
 
@@ -102,14 +102,14 @@ ChangeLog for Creandus' Paludis Hooks
 	"${USERLAND}-${ELIBC}" as the unique system identifier, instead of
 	just USERLAND.
 
-2006-07-18 Mike Kelly <pioto@gentoo.org>
+2006-07-18 Mike Kelly <pioto@pioto.org>
 
 	* ebuild_postrm_post/: Add a postrm hook.
 
-2006-07-17 Mike Kelly <pioto@gentoo.org>
+2006-07-17 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.1.2
 
-2006-07-15 Mike Kelly <pioto@gentoo.org>
+2006-07-15 Mike Kelly <pioto@pioto.org>
 
 	+ Release: 0.1.1
